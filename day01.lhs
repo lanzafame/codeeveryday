@@ -1,4 +1,4 @@
-#What is Haskell?
+What is Haskell?
 
 Haskell is a lazy, functional, statically typed programming language.
 
@@ -389,3 +389,123 @@ Instead, one must write:
 f 3 (n+1) 7.
 
 Lists
+
+Lists are one of the most basic data type in Haskell.
+
+> nums, range, range2 :: [Integer]
+> nums = [1,2,3,19]
+> range = [1..100]
+> range2 = [2,4..100]
+
+Haskell (like Python) also has list comprehensions; you can read about them in
+[LYAH](http://learnyouahaskell.com/starting-out).
+
+Strings are just lists of characters. That is, String is just an abbreviation for
+[Char], and string literal syntax (text surrounded by double quotes) is just an
+abbreviation for a list of Char literals.
+
+> -- hello1 and hello2 are exactly the same.
+>
+> hello1 :: [Char]
+> hello1 = ['h', 'e','l','l','o']
+>
+> hello2 :: String
+> hello2 = "hello"
+>
+> helloSame = hello1 == hello2
+
+This means that all the standard library functions for processing lists can
+also be used to process Strings.
+
+Constructing lists
+
+The simplest possible list is the empty list:
+
+emptyList = []
+
+Other lists are built up from the empty list using the cons operator, (:).
+Cons takes an element and a list, and produces a new list with the element
+prepended to the front.
+
+ex18 = 1 : []
+ex19 = 3 : (1 : [])
+ex20 = 2 : 3 : 4 : []
+
+ex21 = [2,3,4] == 2 : 3 : 4 : []
+
+We can see that [2,3,4] notation is just convenient shorthand for 2 : 3 : 4 : [].
+Note also that these are really singly linked lists, NOT arrays.
+
+> -- Generate the sequence of hailstone iterations from a starting number.
+> hailstoneSeq :: Integer -> [Integer]
+> hailstoneSeq 1 = [1]
+> hailstoneSeq n = n : hailstoneSeq (hailstone n)
+
+We stop the hailstone sequence when we reach 1. The hailstone sequence for a
+general n consists of n itself, followed by the hailstone sequence for hailstone n,
+that is the number obtained by applying the hailstone transformation once to n.
+
+Functions on lists
+
+We can write functions on lists using pattern matching.
+
+> -- Compute the length of a list of Integers.
+> intListLength :: [Integer] -> Integer
+> intListLength []     = 0
+> intListLength (x:xs) = 1 + intListLength xs
+
+The first clause says the the length of an empty list is 0. The second clause says
+that if the input list looks like (x:xs), that is, a first element x consed onto a
+remaining list xs, then the length is one more than the length of xs.
+
+Since we don't use x at all we could also replace it by an underscore:
+intListLength (_:xs) = 1 + intListLength xs.
+
+We can also use nested patterns:
+
+> sumEveryTwo :: [Integer] -> [Integer]
+> sumEveryTwo []         = []     -- Do nothing to the empty list
+> sumEveryTwo (x:[])     = [x]    -- Do nothing to lists with a single element
+> sumEveryTwo (x:(y:zs)) = (x + y) : sumEveryTwo zs
+
+Note how the last clause matches a list starting with x and followed by ... a
+list starting with y and followed by the list zs. We don't actually need the
+extra parentheses, so sumEveryTwo (x:y:zs) = ... would be equivalent.
+
+Combining functions
+
+It's good Haskell style to build up more complex functions by combining many
+simple ones.
+
+> -- The number of hailstone steps needed to reach 1 from a starting
+> -- number.
+> hailstoneLen :: Integer -> Integer
+> hailstoneLen n = intListLength (hailstoneSeq n) -1
+
+This may seem inefficient to you: it generates the entire hailstone sequence first
+and then finds its length, which wastes lots of memory... doesn't it? Actually,
+it doesn't! Because Haskell's lazy evaluation, each element of the sequence is only
+generated as needed, so the sequence generation and list length calculation are
+interleaved. The whole computation uses only O(1) memory, no matter how long the
+sequence. (Not quite true, but close enough for now.)
+
+Error messages
+
+Prelude> 'x' ++ "foo"
+
+<interactive>:1:1:
+    Couldn't match expected type `[a0]' with actual type `Char'
+    In the first argument of `(++)', namely 'x'
+    In the expression: 'x' ++ "foo"
+    In an equation for `it': it = 'x' ++ "foo"
+
+First we are told "Couldn't match expected [a0] with actual type Char". This
+means that something was expected to have a list type, but actually had type
+Char. What something? The next line tells us: it's the first argument of (++)
+which is at fault, namely, 'x'. The next lines go ont to give us a bit more
+context. Now we can see what the problem is: clearly 'x' has type Char, as the
+first line said. Why would it be expected to have a list type? Well, because it
+is used as an argument to (++), which takes a list as its first argument.
+
+
+Tutorial from: http://www.seas.upenn.edu/~cis194/spring13/lectures/01-intro.html
