@@ -1,4 +1,4 @@
-What is Haskell?
+#What is Haskell?
 
 Haskell is a lazy, functional, statically typed programming language.
 
@@ -343,3 +343,49 @@ out the test of evenness used in defining hailstone. A first attempt is shown be
 This works, but it is much too complicated.
 
 Pairs
+
+We can pair things together like so:
+
+> p :: (Int, Char)
+> p = (3, 'x')
+
+Notice that the (x,y) notation is used both for the type of a pair and a pair
+value.
+
+The elements of a pair can be extracted again with pattern matching:
+
+> sumPair :: (Int, Int) -> Int
+> sumPair (x,y) = x + y
+
+Haskell also has triples, quadruples, ... but you should never use them. There
+are better ways to package three or more pieces of information together.
+
+Using functions, and multiple arguments
+
+To apply a function to some arguments, just like the arguments after the funciton,
+separated by spaces, like this:
+
+> f :: Int -> Int -> Int -> Int
+> f x y z = x + y + z
+
+ex17 = f 3 17 8
+
+The above example applies the function f to the three arguments 3, 17, and 8.
+Note also the syntax for the type of a function with multiple arguments, like
+Arg1Type -> Arg2Type -> ... -> ResultType. This might seem strange to you but
+there is a reason for it.
+
+Note that function application has higher precedence than any infix operators.
+So it would be incorrect to write:
+
+f 3 n+1 7
+
+if you intend to pass n+1 as the second argument to f, because this parses as
+
+(f 3 n) + (1 7).
+
+Instead, one must write:
+
+f 3 (n+1) 7.
+
+Lists
