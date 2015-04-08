@@ -11,3 +11,9 @@ Here are my rules (which I stole from GreyHoodies/CodeEveryDay. Thanks :) ) :
 - Days end at Midnight
 - Code must be Open Source and pushed to github, as this is going to be the means of tracking that I did it everyday. I want my github to look like this.
 - University Assignments and paid work - don't count towards my tally (unless it is open source and on github)
+
+
+###Day 02
+
+Instead of Haskell today, I went back to Clojure and did some
+[koans](https://github.com/Lanzafame/clojure-koans). 
