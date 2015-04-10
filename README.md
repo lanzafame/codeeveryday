@@ -17,3 +17,7 @@ Here are my rules (which I stole from GreyHoodies/CodeEveryDay. Thanks :) ) :
 
 Instead of Haskell today, I went back to Clojure and did some
 [koans](https://github.com/Lanzafame/clojure-koans). 
+
+###Day 03
+
+So a hiccup. Spent most of Day 03 in a hospital waiting room with my wife. I actually spent most of my time trying to figure out how to compose a DMux gate from AND, OR, and NOT gates for project 1 of the [nand2tetris](https://github.com/Lanzafame/nand2tetris/tree/master/projects/01) course. 
