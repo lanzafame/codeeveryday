@@ -33,8 +33,8 @@ an expression of type `Thing`.)
 > shoe :: Thing
 > shoe = Shoe
 >
-> listO'Things :: [Thing]
-> listO'Things = [Shoe, SealingWax, King, Cabbage, King]
+> listOfThings :: [Thing]
+> listOfThings = [Shoe, SealingWax, King, Cabbage, King]
 
 We can write functions on `Thing`s by *pattern-matching*.
 
